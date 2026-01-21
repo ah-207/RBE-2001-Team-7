@@ -5,6 +5,7 @@
 
 BlueMotor motor;
 Romi32U4ButtonB buttonB;
+Romi32U4ButtonC buttonC;
 long timeToPrint = 0;
 long now = 0;
 long newPosition = 0;
@@ -41,7 +42,26 @@ void loop()
     {
       timeToPrint = now + sampleTime;
       newPosition = motor.getPosition();
-      speedInRPM = ;
+      speedInRPM = 150;
+      Serial.print(now);
+      Serial.print("          ");
+      Serial.print(newPosition);
+      Serial.print("          ");
+      Serial.println(speedInRPM);
+      oldPosition = newPosition;
+      
+    }
+    
+  }
+  while (buttonC.isPressed())
+  {
+    // The button is currently pressed.
+    motor.setEffort(-motorEffort);
+    if ((now = millis()) > timeToPrint)
+    {
+      timeToPrint = now + sampleTime;
+      newPosition = motor.getPosition();
+      speedInRPM = -150;
       Serial.print(now);
       Serial.print("          ");
       Serial.print(newPosition);
