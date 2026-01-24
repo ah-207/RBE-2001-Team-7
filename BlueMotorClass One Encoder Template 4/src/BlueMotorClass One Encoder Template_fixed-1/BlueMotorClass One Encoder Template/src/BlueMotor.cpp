@@ -47,16 +47,19 @@ void BlueMotor::reset()
     interrupts();
 }
 
+
 short BlueMotor::getState(bool ENCA, bool ENCB)
 {
     if (!ENCA && !ENCB)
         return 3;
-    if (!ENCA && ENCB)
+
+        else if (!ENCA && ENCB)
         return 2;
-    if(ENCA && ENCB)
-        return 1;
-    else 
-        return 0;
+
+        else if (ENCA && ENCB)
+            return 1;
+
+    return 0;
 }
 
 void BlueMotor::isr()
@@ -67,14 +70,24 @@ void BlueMotor::isr()
     //compute difference with previous state
     short delta = (state-previousState+4)%4;
 
-    //handle movement
-    if (delta == 1)
-        count++;
-    else if (delta == 3)
-        count--;
-    
+    //short delta = (state-previousState);
+
     previousState = state;
 
+    //handle movement
+    if (state%2 == 0)
+        count--;
+    else if (state%2 == 1)
+        count++;
+
+    // Serial.print(state);
+    // Serial.print(" | ");
+    //     Serial.print(previousState);
+    // Serial.print(" | ");
+    //     Serial.print(delta);
+    // Serial.print(" | ");
+    //   Serial.print(digitalRead(ENCA));    Serial.print(" | ");
+    //   Serial.println(digitalRead(ENCB)); 
 
 }
 

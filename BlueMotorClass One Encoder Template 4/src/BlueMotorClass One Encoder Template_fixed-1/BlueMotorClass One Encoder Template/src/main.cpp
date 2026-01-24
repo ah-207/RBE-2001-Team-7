@@ -15,6 +15,9 @@ int speedInRPM = 0;
 int CPR = 270;
 int motorEffort = 400;
 
+const int ENCA = 0;
+const int ENCB = 1;
+
 void setup()
 {
   Serial.begin(9600);
@@ -27,6 +30,9 @@ void setup()
   Serial.print("    ");
   Serial.println("speedInRPM");
   delay(3000);
+
+  pinMode(ENCA, INPUT);
+  pinMode(ENCB, INPUT);
 }
 
 
@@ -42,13 +48,13 @@ void loop()
     {
       timeToPrint = now + sampleTime;
       newPosition = motor.getPosition();
-      speedInRPM =150;
+      speedInRPM = 150;
       Serial.print(now);
       Serial.print("          ");
       Serial.print(newPosition);
       Serial.print("          ");
       Serial.println(speedInRPM);
-      oldPosition = newPosition;    
+      Serial.println("          ");
     }
     
   }
@@ -66,7 +72,9 @@ void loop()
       Serial.print("          ");
       Serial.print(newPosition);
       Serial.print("          ");
-      Serial.println(speedInRPM);
+      Serial.print(speedInRPM);
+      Serial.println("          ");
+
       oldPosition = newPosition;
     }
   }
